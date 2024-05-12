@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Lab 2: Exercise 3</title>
+    <meta charset="utf-8">
+    <script
+      src="https://code.jquery.com/jquery-3.1.1.js"
+      integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+      crossorigin="anonymous"></script>
+    <script
+      src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+      integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+      crossorigin="anonymous"></script>
+    <link rel="stylesheet" href=
+      "https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.css">
+    <link rel="stylesheet" href=
+      "https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css">
+
+    <style>
+      body {
+        margin: 20px;
+      }
+      #name_input {
+        float: left;
+        margin-bottom: 20px;
+        margin-right: 20px;
+      }
+      #date_input {
+        margin-bottom: 20px;
+      }
+      #year_input {
+        clear:both;
+      }
+      .rank_color {
+        width: 20px;
+        margin-top: 2px;
+      }
+
+      /* Added CSS for sortable list */
+      #sortable { list-style-type: none; margin: 0; padding: 0; width: 150px; }
+      #sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.0em; height: 12px; }
+      #sortable li.ui-state-default { background: #f6f6f6; cursor: pointer; }
+      #sortable li.ui-state-default:hover { background: #e6e6e6; }
+
+      /* Added span style */
+      #sortable li span { position: absolute; margin-left: -1.3em; }
+
+      /* Added CSS for color swatch */
+      .color_swatch { height: 50px; width: 50px; }
+    </style>
+
+<script>
+$(document).ready(function() {
+  $("#date").datepicker({
+    minDate: "-2w", // two weeks ago
+    maxDate: "+2w"  // two weeks from now
+  });
+
+  // Initialize selectable for enrolment type
+  $("#selectable").selectable({
+    selected: function(event, ui) {
+      // Get the selected item's text content
+      var selectedValue = $(ui.selected).text();
+      console.log("Selected value:", selectedValue);
+    }
+  });
+
+  // Initialize sortable for color input
+  $("#sortable").sortable();
+  $("#sortable").disableSelection();
+
+  // Add tooltip functionality
+  $(document).tooltip({
+    items: '[title], [class]',
+    position: { my: "left center", at: "right center" },
+    content: function() {
+      var element = $(this);
+      if (element.is('[title]'))
+        return element.attr('title');
+      if (element.is('[class]')) {
+        console.log('class', element);
+        if (element.hasClass('ui-state-default')) {
+          var text = element.text();
+          return '<div class="color_swatch" style="background:' + text + '"></div>';
+        }
+      }
+    }
+  });
+});
+</script>
+    
+  </head>
+  <body>
+    <h2>jQuery UI-Survey</h2>
+    <h3>General Information</h3>
+    <div id="name_input">
+      <label for="name">Name:</label>
+      <input type="text" id="name">
+    </div>
+    <div id="date_input">
+      <label for="date">Date:</label>
+      <input type="text" id="date">
+    </div>
+    <div id="year_input">
+	    <h3>Are you enrolled as an undergraduate or a graduate?</h3>
+      <!-- Commented out radio button inputs -->
+      <!--<input type="radio" name="enroll_year" id="ugrad" value="ugrad">
+      <label for="ugrad">Undergraduate (taking 6.813)</label><br>
+      <input type="radio" name="enroll_year" id="grad" value="grad">
+      <label for="grad">Graduate (taking 6.831)</label>-->
+      <!-- New: Selectable list items for enrolment type -->
+      <ol id="selectable">
+        <li class="ui-widget-content" title="taking 6.813">Undergraduate</li>
+        <li class="ui-widget-content" title="taking 6.831">Graduate</li>
+      </ol>
+    </div>
+
+    <!-- Replaced color input with sortable list -->
+    <div id="color_input">
+	    <h3>Rank the colors from your most favorite to your least favorite:</h3>
+      <ul id="sortable">
+        <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>#ff0000</li>
+        <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>#0000ff</li>
+        <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>#ff00b3</li>
+        <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>#ded447</li>
+        <li class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>#125e18</li>
+      </ul>
+    </div>
+
+  </body>
+</html>

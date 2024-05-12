@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lab 4: Task 2</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <style>
+    /* CSS Styles */
+    #boxes { margin-top: 50px; float: left; width: 100%; }
+    #toggles { float: left; width: 100%; margin-top: 10px; }
+    #info { float: left; margin-top: 5px; }
+    .box { width: 50px; height: 50px; float: left; }
+    .outlined { border: 2px solid black; }
+    .round-edge { border-radius: 15px; }
+    .teal { background-color: teal; }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.1.1.js"
+          integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+          crossorigin="anonymous"></script>
+  <script>
+    $(document).ready(function(){
+      // Variables to track toggle states
+      var colorsToggled = false;
+      var bordersToggled = false;
+
+// Toggle Colors button click event
+$('#button_toggle_colors').click(function(){
+    // Define colorTeal
+    var colorTeal = "rgb(0, 128, 128)";
+  
+    var box1 = $('#box1');
+    if ($(box1).css('background-color') == colorTeal) {
+        $(box1).css('background-color', '');
+    } else {
+        $(box1).css('background-color', colorTeal);
+    }
+    $('.box').toggleClass('teal');
+    colorsToggled = !colorsToggled; // Toggle the state
+});
+
+
+// to toggle Rounded Borders button click event
+$('#button_toggle_roundedges').click(function(){
+  // Check if the button has the class 'round-edge'
+  if ($(this).hasClass('round-edge')){
+    // If it has the class, remove it
+    $(this).removeClass('round-edge');
+  } else {
+    // If  doesn't have the class, it will add it
+    $(this).addClass('round-edge');
+  }
+  // Toggle the 'round-edge' class for all elements with the class 'box'
+  $('.box').toggleClass('round-edge');
+  // Toggle the state of the 'bordersToggled' variable
+  bordersToggled = !bordersToggled;
+});
+
+
+      // Add a New Box button click event
+      $('#button_add_box').click(function(){
+        var newBoxNumber = $('.box').length + 1; // Calculate new box number
+        $('#boxes').append('<div id="box' + newBoxNumber + '" class="box outlined"></div>'); // Append new box
+var new_box = document.createElement('div');
+var existingBoxes = $(".box").length;
+var nextBoxId = existingBoxes+1;
+$(new_box).attr("id","box"+nextBoxId);
+     
+      });
+    });
+  </script>
+</head>
+<body>
+<div class="container">
+  <!-- Boxes Section -->
+  <div id="boxes">
+    <div id="box1" class="box outlined"></div>
+    <div id="box2" class="box outlined"></div>
+    <div id="box3" class="box outlined"></div>
+  </div>
+  
+  <!-- Toggles Section -->
+  <div id="toggles">
+    <h2>Toggles</h2>
+    <button class="btn" id="button_toggle_colors">Toggle Colors</button>
+    <button class="btn" id="button_toggle_roundedges">Toggle Rounded Borders</button>
+    <button class="btn" id="button_add_box">Add a New Box</button>
+  </div>
+</div>
+</body>
+</html>
